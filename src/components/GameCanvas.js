@@ -41,7 +41,6 @@ function GameCanvas() {
       validationArrCopy[rindex][cindex] = true;
       setIsValid(validationArrCopy);
     }
-    console.log(sudokuArr);
     winChecker(sudokuArr, data, rindex, cindex);
   };
   return (
