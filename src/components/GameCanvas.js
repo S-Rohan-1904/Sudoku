@@ -26,14 +26,12 @@ function GameCanvas() {
   const [isValid, setIsValid] = useState(validationArr); // we have to maintain isvalid for each individual cell
   const [sudokuArr, setSudokuArr] = useState(generateSudoku(45));
   const inputChangeHandler = (data, rindex, cindex) => {
-    let copy = [...sudokuArr]; // spread operator deep copies the array hence all the changes of copy will be reflected in sudokuArr
-
     if (data == 0) {
       // beacuse it is converting to 0 because of +
       data = "";
     }
 
-    copy[rindex][cindex] = data;
+    sudokuArr[rindex][cindex] = data;
 
     let validationArrCopy = [...isValid];
     if (!validator(rindex, cindex, data, sudokuArr)) {
@@ -43,8 +41,8 @@ function GameCanvas() {
       validationArrCopy[rindex][cindex] = true;
       setIsValid(validationArrCopy);
     }
+    console.log(sudokuArr);
     winChecker(sudokuArr, data, rindex, cindex);
-    setSudokuArr(copy);
   };
   return (
     <div className="gameCanvas">
