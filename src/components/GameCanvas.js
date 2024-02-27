@@ -51,7 +51,7 @@ function GameCanvas() {
       {sudokuArr.map((row, rowIndex) =>
         row.map((cell, columnIndex) => (
           <Cell
-            key={rowIndex} //we can't use key as a prop
+            key={rowIndex.toString() + columnIndex.toString()} //we can't use key as a prop
             cindex={columnIndex}
             rindex={rowIndex}
             enteredValue={cell}
