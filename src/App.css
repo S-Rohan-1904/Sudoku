@@ -15,7 +15,7 @@ h1.title {
   color: whitesmoke;
 }
 
-.gameCanvas {
+.sudoku {
   margin: 2rem auto;
   display: grid;
   grid-template-columns: repeat(9, 7vh);
