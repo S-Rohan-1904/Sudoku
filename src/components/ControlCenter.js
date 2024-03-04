@@ -7,10 +7,18 @@ function ControlCenter(props) {
   const newGameHandler = () => {
     props.newGame(true);
   };
+  const undoHandler = () => {
+    props.onUndo(true);
+  };
+  const redoHandler = () => {
+    props.onRedo(true);
+  };
   return (
     <div>
       <button onClick={clearGameHandler}>Clear Game</button>
       <button onClick={newGameHandler}>New Game</button>
+      <button onClick={undoHandler}>Undo</button>
+      <button onClick={redoHandler}>Redo</button>
     </div>
   );
 }
