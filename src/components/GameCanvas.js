@@ -65,6 +65,7 @@ function GameCanvas() {
             enteredValue={cell}
             onInputChange={inputChangeHandler}
             className={`${isValid[rowIndex][columnIndex] ? "" : "invalid"}`}
+            readOnly={initialSudoku[rowIndex][columnIndex] != ""}
           />
         ))
       )}

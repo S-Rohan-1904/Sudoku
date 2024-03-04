@@ -14,6 +14,7 @@ const Cell = (props) => {
       value={props.enteredValue}
       className={classes}
       onChange={inputChangeHandler}
+      readOnly={props.readOnly}
     />
   );
 };
