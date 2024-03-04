@@ -3,6 +3,7 @@ import Cell from "./Cell";
 import generateSudoku from "./SudokuGenerator";
 import validator from "./InputValidator";
 import { useState, useEffect } from "react";
+import ControlCenter from "./ControlCenter";
 
 const winChecker = (sudoku, data, rindex, cindex, isValid) => {
   let validity = true;
@@ -27,8 +28,18 @@ const winChecker = (sudoku, data, rindex, cindex, isValid) => {
     }
   }
 };
-const initialSudoku = generateSudoku(45);
-function GameCanvas() {
+const initialSudoku = generateSudoku(2);
+function Sudoku() {
+  const [clearGame, setClearGame] = useState(false);
+  const clearHandler = (clear) => {
+    setClearGame(clear);
+  };
+  useEffect(() => {
+    if (clearGame) {
+      setSudokuArr(initialSudoku);
+      setClearGame(false);
+    }
+  }, [clearGame]);
   const validationArr = Array(9);
   for (let i = 0; i < 9; i++) {
     validationArr[i] = Array(9).fill(true);
@@ -66,22 +77,25 @@ function GameCanvas() {
     setSudokuArr(updatedSudokuArr);
   };
   return (
-    <div className="gameCanvas">
-      {sudokuArr.map((row, rowIndex) =>
-        row.map((cell, columnIndex) => (
-          <Cell
-            key={rowIndex.toString() + columnIndex.toString()} //we can't use key as a prop
-            cindex={columnIndex}
-            rindex={rowIndex}
-            enteredValue={cell}
-            onInputChange={inputChangeHandler}
-            className={`${isValid[rowIndex][columnIndex] ? "" : "invalid"}`}
-            readOnly={initialSudoku[rowIndex][columnIndex] != ""}
-          />
-        ))
-      )}
-    </div>
+    <>
+      <div className="sudoku">
+        {sudokuArr.map((row, rowIndex) =>
+          row.map((cell, columnIndex) => (
+            <Cell
+              key={rowIndex.toString() + columnIndex.toString()} //we can't use key as a prop
+              cindex={columnIndex}
+              rindex={rowIndex}
+              enteredValue={cell}
+              onInputChange={inputChangeHandler}
+              className={`${isValid[rowIndex][columnIndex] ? "" : "invalid"}`}
+              readOnly={initialSudoku[rowIndex][columnIndex] != ""}
+            />
+          ))
+        )}
+      </div>
+      <ControlCenter onClear={clearHandler} />
+    </>
   );
 }
 
-export default GameCanvas;
+export default Sudoku;
