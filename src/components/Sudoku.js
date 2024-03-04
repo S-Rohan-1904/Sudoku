@@ -5,7 +5,7 @@ import validator from "./InputValidator";
 import { useState, useEffect } from "react";
 import ControlCenter from "./ControlCenter";
 
-const winChecker = (sudoku, data, rindex, cindex, isValid) => {
+const winChecker = (sudoku, isValid) => {
   let validity = true;
   for (let i = 0; i < 9; i++) {
     if (isValid[i].includes(false)) {
@@ -28,24 +28,46 @@ const winChecker = (sudoku, data, rindex, cindex, isValid) => {
     }
   }
 };
-const initialSudoku = generateSudoku(2);
+
 function Sudoku() {
   const [clearGame, setClearGame] = useState(false);
+  const [newGame, setNewGame] = useState(false);
+  const [initial, setInitial] = useState(generateSudoku(45));
   const clearHandler = (clear) => {
     setClearGame(clear);
   };
+  const newGameHandler = (newGame) => {
+    setNewGame(newGame);
+  };
   useEffect(() => {
     if (clearGame) {
-      setSudokuArr(initialSudoku);
+      setSudokuArr(initial);
       setClearGame(false);
+      for (let i = 0; i < 9; i++) {
+        validationArr[i] = Array(9).fill(true);
+      }
+      setIsValid(validationArr);
     }
   }, [clearGame]);
+  useEffect(() => {
+    if (newGame) {
+      const initial = generateSudoku(45);
+      setInitial(initial);
+      setSudokuArr(initial);
+      setNewGame(false);
+      const validationArr = Array(9);
+      for (let i = 0; i < 9; i++) {
+        validationArr[i] = Array(9).fill(true);
+      }
+      setIsValid(validationArr);
+    }
+  }, [newGame]);
   const validationArr = Array(9);
   for (let i = 0; i < 9; i++) {
     validationArr[i] = Array(9).fill(true);
   }
   const [isValid, setIsValid] = useState(validationArr); // we have to maintain isvalid for each individual cell
-  const [sudokuArr, setSudokuArr] = useState(initialSudoku);
+  const [sudokuArr, setSudokuArr] = useState(initial);
 
   const inputChangeHandler = (data, rindex, cindex) => {
     if (data == 0) {
@@ -73,7 +95,7 @@ function Sudoku() {
       });
     });
     setIsValid(updatedValidationArr);
-    winChecker(sudokuArr, data, rindex, cindex, updatedValidationArr);
+    winChecker(sudokuArr, updatedValidationArr);
     setSudokuArr(updatedSudokuArr);
   };
   return (
@@ -88,12 +110,12 @@ function Sudoku() {
               enteredValue={cell}
               onInputChange={inputChangeHandler}
               className={`${isValid[rowIndex][columnIndex] ? "" : "invalid"}`}
-              readOnly={initialSudoku[rowIndex][columnIndex] != ""}
+              readOnly={initial[rowIndex][columnIndex] != ""}
             />
           ))
         )}
       </div>
-      <ControlCenter onClear={clearHandler} />
+      <ControlCenter onClear={clearHandler} newGame={newGameHandler} />
     </>
   );
 }

@@ -1,12 +1,16 @@
 import React from "react";
 
 function ControlCenter(props) {
-  const clickHandler = () => {
+  const clearGameHandler = () => {
     props.onClear(true);
+  };
+  const newGameHandler = () => {
+    props.newGame(true);
   };
   return (
     <div>
-      <button onClick={clickHandler}>Clear Game</button>
+      <button onClick={clearGameHandler}>Clear Game</button>
+      <button onClick={newGameHandler}>New Game</button>
     </div>
   );
 }
