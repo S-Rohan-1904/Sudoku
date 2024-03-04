@@ -80,7 +80,7 @@ function Sudoku() {
     }
   }, [undo]);
   useEffect(() => {
-    if (redo) {
+    if (redo && prevSudokuArr != null) {
       setSudokuArr(prevSudokuArr);
       setPrevSudokuArr(sudokuArr);
       setRedo(false);
