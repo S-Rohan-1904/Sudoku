@@ -27,7 +27,7 @@ const winChecker = (sudoku, data, rindex, cindex, isValid) => {
     }
   }
 };
-const initialSudoku = generateSudoku(3);
+const initialSudoku = generateSudoku(45);
 function GameCanvas() {
   const validationArr = Array(9);
   for (let i = 0; i < 9; i++) {
