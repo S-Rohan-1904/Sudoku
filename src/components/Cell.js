@@ -5,6 +5,13 @@ const Cell = (props) => {
   const inputChangeHandler = (e) => {
     props.onInputChange(+e.target.value, props.rindex, props.cindex); //+ symbol for it to be a number
   };
+  const focusHandler = (e) => {
+    if (props.readOnly == false) {
+      props.onFocusChange(+e.target.value, props.rindex, props.cindex);
+    } else {
+      props.onFocusChange(null);
+    }
+  };
   let classes = "cellInput " + props.className;
   return (
     <input
@@ -15,6 +22,7 @@ const Cell = (props) => {
       className={classes}
       onChange={inputChangeHandler}
       readOnly={props.readOnly}
+      onFocus={focusHandler}
     />
   );
 };

@@ -86,13 +86,50 @@ function Sudoku() {
       setRedo(false);
     }
   }, [redo]);
+
   const validationArr = Array(9);
   for (let i = 0; i < 9; i++) {
     validationArr[i] = Array(9).fill(true);
   }
+
   const [isValid, setIsValid] = useState(validationArr); // we have to maintain isvalid for each individual cell
+
   const [sudokuArr, setSudokuArr] = useState(initial);
+
   const [prevSudokuArr, setPrevSudokuArr] = useState(null);
+  const [current, setCurrent] = useState(null);
+  const focusChangeHandler = (data, rindex, cindex) => {
+    setCurrent({ data: data, rindex: rindex, cindex: cindex });
+  };
+
+  const eraseHandler = () => {
+    setPrevSudokuArr(sudokuArr);
+    const updatedSudokuArr = sudokuArr.map((row, rowIndex) => {
+      return row.map((cell, colIndex) => {
+        if ((rowIndex == current.rindex) & (colIndex == current.cindex)) {
+          return "";
+        } else {
+          return cell;
+        }
+      });
+    });
+    setSudokuArr(updatedSudokuArr);
+    const updatedValidationArr = validationArr.map((row, rowIndex) => {
+      return row.map((cell, colIndex) => {
+        if (rowIndex == current.rindex && colIndex == current.cindex) {
+          return validator(
+            current.rindex,
+            current.cindex,
+            current.data,
+            sudokuArr
+          );
+        } else {
+          return isValid[rowIndex][colIndex];
+        }
+      });
+    });
+    setIsValid(updatedValidationArr);
+  };
   const inputChangeHandler = (data, rindex, cindex) => {
     if (data >= 0 && data <= 9) {
       if (data == 0) {
@@ -136,6 +173,7 @@ function Sudoku() {
               rindex={rowIndex}
               enteredValue={cell}
               onInputChange={inputChangeHandler}
+              onFocusChange={focusChangeHandler}
               className={`${isValid[rowIndex][columnIndex] ? "" : "invalid"}`}
               readOnly={initial[rowIndex][columnIndex] != ""}
             />
@@ -147,6 +185,7 @@ function Sudoku() {
         newGame={newGameHandler}
         onUndo={undoHandler}
         onRedo={redoHandler}
+        onErase={eraseHandler}
       />
     </>
   );
