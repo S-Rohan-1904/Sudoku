@@ -4,18 +4,27 @@ import generateSudoku from "./SudokuGenerator";
 import validator from "./InputValidator";
 import { useState, useEffect } from "react";
 
-const winChecker = (sudoku, data, rindex, cindex) => {
-  let win;
+const winChecker = (sudoku, data, rindex, cindex, isValid) => {
+  let validity = true;
   for (let i = 0; i < 9; i++) {
-    win = false;
-    if (!sudoku[i].includes("") && validator(rindex, cindex, data, sudoku)) {
-      win = true;
-    } else {
+    if (isValid[i].includes(false)) {
+      validity = false;
       break;
     }
   }
-  if (win) {
-    alert("You won!!"); // handle what to do after win
+  let win;
+  if (validity) {
+    for (let i = 0; i < 9; i++) {
+      win = false;
+      if (!sudoku[i].includes("")) {
+        win = true;
+      } else {
+        break;
+      }
+    }
+    if (win) {
+      alert("You won!!"); // handle what to do after win
+    }
   }
 };
 const initialSudoku = generateSudoku(45);
@@ -29,7 +38,7 @@ function GameCanvas() {
 
   const inputChangeHandler = (data, rindex, cindex) => {
     if (data == 0) {
-      // beacuse it is converting to 0 because of +
+      // because it is converting to 0 because of +
       data = "";
     }
 
@@ -43,15 +52,17 @@ function GameCanvas() {
       });
     });
 
-    let validationArrCopy = [...isValid];
-    if (!validator(rindex, cindex, data, sudokuArr)) {
-      validationArrCopy[rindex][cindex] = false;
-      setIsValid(validationArrCopy);
-    } else {
-      validationArrCopy[rindex][cindex] = true;
-      setIsValid(validationArrCopy);
-    }
-    winChecker(sudokuArr, data, rindex, cindex);
+    const updatedValidationArr = validationArr.map((row, rowIndex) => {
+      return row.map((cell, colIndex) => {
+        if (rowIndex == rindex && colIndex == cindex) {
+          return validator(rindex, cindex, data, sudokuArr);
+        } else {
+          return isValid[rowIndex][colIndex];
+        }
+      });
+    });
+    setIsValid(updatedValidationArr);
+    winChecker(sudokuArr, data, rindex, cindex, updatedValidationArr);
     setSudokuArr(updatedSudokuArr);
   };
   return (
@@ -65,6 +76,7 @@ function GameCanvas() {
             enteredValue={cell}
             onInputChange={inputChangeHandler}
             className={`${isValid[rowIndex][columnIndex] ? "" : "invalid"}`}
+            readOnly={initialSudoku[rowIndex][columnIndex] != ""}
           />
         ))
       )}
