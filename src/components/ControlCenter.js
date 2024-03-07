@@ -10,11 +10,11 @@ function ControlCenter(props) {
   const undoHandler = () => {
     props.onUndo(true);
   };
-  const redoHandler = () => {
-    props.onRedo(true);
-  };
   const eraseHandler = () => {
     props.onErase();
+  };
+  const winHandler = () => {
+    props.onWin();
   };
   return (
     <div>
@@ -22,6 +22,7 @@ function ControlCenter(props) {
       <button onClick={newGameHandler}>New Game</button>
       <button onClick={undoHandler}>Undo</button>
       <button onClick={eraseHandler}>Erase</button>
+      <button onClick={winHandler}>Validate Sudoku</button>
     </div>
   );
 }

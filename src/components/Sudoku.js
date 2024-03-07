@@ -3,45 +3,51 @@ import generateSudoku from "./SudokuGenerator";
 import validator from "./InputValidator";
 import { useState, useEffect } from "react";
 import ControlCenter from "./ControlCenter";
-
-const winChecker = (sudoku, isValid) => {
-  let validity = true;
-  for (let i = 0; i < 9; i++) {
-    if (isValid[i].includes(false)) {
-      validity = false;
-      break;
-    }
-  }
-  let win;
-  if (validity) {
-    for (let i = 0; i < 9; i++) {
-      win = false;
-      if (!sudoku[i].includes("")) {
-        win = true;
-      } else {
-        break;
-      }
-    }
-    if (win) {
-      alert("You won!!"); // handle what to do after win
-    }
-  }
-};
+import "./Sudoku.css";
 
 function Sudoku() {
   const [clearGame, setClearGame] = useState(false);
   const [newGame, setNewGame] = useState(false);
-  const [initial, setInitial] = useState(generateSudoku(45));
+  const [initial, setInitial] = useState(generateSudoku(2));
   const [history, setHistory] = useState([]);
+  const [win, setWin] = useState(false);
 
   const clearHandler = (clear) => {
     setClearGame(clear);
+    setWin(false);
   };
   const newGameHandler = (newGame) => {
     setNewGame(newGame);
+    setWin(false);
+  };
+  useEffect(() => {
+    setWin(false);
+  }, []);
+  const winHandler = () => {
+    let validity = true;
+    for (let i = 0; i < 9; i++) {
+      if (isValid[i].includes(false)) {
+        validity = false;
+        break;
+      }
+    }
+    let win;
+    if (validity) {
+      for (let i = 0; i < 9; i++) {
+        win = false;
+        if (!sudokuArr[i].includes("")) {
+          win = true;
+        } else {
+          break;
+        }
+      }
+      if (win) {
+        alert("You won!!"); // handle what to do after win
+      }
+    }
+    setWin(win);
   };
   const undoHandler = () => {
-    // what to do in case of data=""
     if (history.length >= 1) {
       let element = history[history.length - 1];
       const updatedHistory = history.filter((historyObj, index) => {
@@ -93,7 +99,7 @@ function Sudoku() {
 
   useEffect(() => {
     if (newGame) {
-      const initialSudoku = generateSudoku(45);
+      const initialSudoku = generateSudoku(2);
       setHistory([]);
       setInitial(initialSudoku);
       setSudokuArr(initialSudoku);
@@ -121,17 +127,10 @@ function Sudoku() {
   };
 
   const eraseHandler = () => {
-    // how to maintain history
     const erasedHistory = history.filter((historyObj) => {
       if (
         sudokuArr[currentCell.rindex][currentCell.cindex] != historyObj.data
       ) {
-        // console.log(
-        //   JSON.stringify(historyObj.cindex) !=
-        //     JSON.stringify(currentCell.cindex) &&
-        //     JSON.stringify(historyObj.rindex) !=
-        //       JSON.stringify(currentCell.rindex)
-        // );
         return historyObj;
       }
     });
@@ -195,13 +194,13 @@ function Sudoku() {
         });
       });
       setIsValid(updatedValidationArr);
-      winChecker(sudokuArr, updatedValidationArr);
       setSudokuArr(updatedSudokuArr);
     }
   };
 
   return (
     <>
+      {win && <h3 className="win">You win!!</h3>}
       <div className="sudoku">
         {sudokuArr.map((row, rowIndex) =>
           row.map((cell, columnIndex) => (
@@ -223,6 +222,7 @@ function Sudoku() {
         newGame={newGameHandler}
         onUndo={undoHandler}
         onErase={eraseHandler}
+        onWin={winHandler}
       />
     </>
   );

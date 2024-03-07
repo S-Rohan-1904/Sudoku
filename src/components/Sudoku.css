@@ -1,0 +1,9 @@
+.win {
+  font-size: 1.3em;
+  padding: 0;
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
