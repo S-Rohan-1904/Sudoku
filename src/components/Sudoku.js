@@ -8,7 +8,7 @@ import "./Sudoku.css";
 function Sudoku() {
   const [clearGame, setClearGame] = useState(false);
   const [newGame, setNewGame] = useState(false);
-  const [initial, setInitial] = useState(generateSudoku(2));
+  const [initial, setInitial] = useState(generateSudoku(45));
   const [history, setHistory] = useState([]);
   const [win, setWin] = useState(false);
 
@@ -99,7 +99,7 @@ function Sudoku() {
 
   useEffect(() => {
     if (newGame) {
-      const initialSudoku = generateSudoku(2);
+      const initialSudoku = generateSudoku(45);
       setHistory([]);
       setInitial(initialSudoku);
       setSudokuArr(initialSudoku);
