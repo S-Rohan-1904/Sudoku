@@ -21,7 +21,6 @@ function ControlCenter(props) {
       <button onClick={clearGameHandler}>Clear Game</button>
       <button onClick={newGameHandler}>New Game</button>
       <button onClick={undoHandler}>Undo</button>
-      <button onClick={redoHandler}>Redo</button>
       <button onClick={eraseHandler}>Erase</button>
     </div>
   );

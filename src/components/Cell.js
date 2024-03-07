@@ -7,7 +7,7 @@ const Cell = (props) => {
   };
   const focusHandler = (e) => {
     if (props.readOnly == false) {
-      props.onFocusChange(+e.target.value, props.rindex, props.cindex);
+      props.onFocusChange(props.rindex, props.cindex);
     } else {
       props.onFocusChange(null);
     }

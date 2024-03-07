@@ -1,4 +1,3 @@
-import React from "react";
 import Cell from "./Cell";
 import generateSudoku from "./SudokuGenerator";
 import validator from "./InputValidator";
@@ -32,36 +31,72 @@ const winChecker = (sudoku, isValid) => {
 function Sudoku() {
   const [clearGame, setClearGame] = useState(false);
   const [newGame, setNewGame] = useState(false);
-  const [undo, setUndo] = useState(false);
-  const [redo, setRedo] = useState(false);
   const [initial, setInitial] = useState(generateSudoku(45));
+  const [history, setHistory] = useState([]);
+
   const clearHandler = (clear) => {
     setClearGame(clear);
   };
   const newGameHandler = (newGame) => {
     setNewGame(newGame);
   };
-  const undoHandler = (undo) => {
-    setUndo(undo);
+  const undoHandler = () => {
+    // what to do in case of data=""
+    if (history.length >= 1) {
+      let element = history[history.length - 1];
+      const updatedHistory = history.filter((historyObj, index) => {
+        if (index < history.length - 1) {
+          return historyObj;
+        }
+      });
+      console.log(updatedHistory);
+      setHistory(updatedHistory);
+      const updatedSudokuArr = sudokuArr.map((row, rowIndex) => {
+        return row.map((cell, colIndex) => {
+          if ((rowIndex == element.rindex) & (colIndex == element.cindex)) {
+            return "";
+          } else {
+            return cell;
+          }
+        });
+      });
+      setSudokuArr(updatedSudokuArr);
+      const updatedValidationArr = validationArr.map((row, rowIndex) => {
+        return row.map((cell, colIndex) => {
+          if (rowIndex == element.rindex && colIndex == element.cindex) {
+            return validator(
+              element.rindex,
+              element.cindex,
+              element.data,
+              sudokuArr
+            );
+          } else {
+            return isValid[rowIndex][colIndex];
+          }
+        });
+      });
+      setIsValid(updatedValidationArr);
+    }
   };
-  const redoHandler = (redo) => {
-    setRedo(redo);
-  };
+
   useEffect(() => {
     if (clearGame) {
       setSudokuArr(initial);
       setClearGame(false);
+      setHistory([]);
       for (let i = 0; i < 9; i++) {
         validationArr[i] = Array(9).fill(true);
       }
       setIsValid(validationArr);
     }
   }, [clearGame]);
+
   useEffect(() => {
     if (newGame) {
-      const initial = generateSudoku(45);
-      setInitial(initial);
-      setSudokuArr(initial);
+      const initialSudoku = generateSudoku(45);
+      setHistory([]);
+      setInitial(initialSudoku);
+      setSudokuArr(initialSudoku);
       setNewGame(false);
       const validationArr = Array(9);
       for (let i = 0; i < 9; i++) {
@@ -70,22 +105,6 @@ function Sudoku() {
       setIsValid(validationArr);
     }
   }, [newGame]);
-  useEffect(() => {
-    if (undo) {
-      if (prevSudokuArr != null) {
-        setSudokuArr(prevSudokuArr);
-        setPrevSudokuArr(sudokuArr);
-      }
-      setUndo(false);
-    }
-  }, [undo]);
-  useEffect(() => {
-    if (redo && prevSudokuArr != null) {
-      setSudokuArr(prevSudokuArr);
-      setPrevSudokuArr(sudokuArr);
-      setRedo(false);
-    }
-  }, [redo]);
 
   const validationArr = Array(9);
   for (let i = 0; i < 9; i++) {
@@ -96,17 +115,31 @@ function Sudoku() {
 
   const [sudokuArr, setSudokuArr] = useState(initial);
 
-  const [prevSudokuArr, setPrevSudokuArr] = useState(null);
-  const [current, setCurrent] = useState(null);
-  const focusChangeHandler = (data, rindex, cindex) => {
-    setCurrent({ data: data, rindex: rindex, cindex: cindex });
+  const [currentCell, setCurrentCell] = useState(null);
+  const focusChangeHandler = (rindex, cindex) => {
+    setCurrentCell({ rindex: rindex, cindex: cindex });
   };
 
   const eraseHandler = () => {
-    setPrevSudokuArr(sudokuArr);
+    // how to maintain history
+    const erasedHistory = history.filter((historyObj) => {
+      if (
+        sudokuArr[currentCell.rindex][currentCell.cindex] != historyObj.data
+      ) {
+        // console.log(
+        //   JSON.stringify(historyObj.cindex) !=
+        //     JSON.stringify(currentCell.cindex) &&
+        //     JSON.stringify(historyObj.rindex) !=
+        //       JSON.stringify(currentCell.rindex)
+        // );
+        return historyObj;
+      }
+    });
+    setHistory(erasedHistory);
+    console.log(erasedHistory);
     const updatedSudokuArr = sudokuArr.map((row, rowIndex) => {
       return row.map((cell, colIndex) => {
-        if ((rowIndex == current.rindex) & (colIndex == current.cindex)) {
+        if (rowIndex == currentCell.rindex && colIndex == currentCell.cindex) {
           return "";
         } else {
           return cell;
@@ -116,11 +149,11 @@ function Sudoku() {
     setSudokuArr(updatedSudokuArr);
     const updatedValidationArr = validationArr.map((row, rowIndex) => {
       return row.map((cell, colIndex) => {
-        if (rowIndex == current.rindex && colIndex == current.cindex) {
+        if (rowIndex == currentCell.rindex && colIndex == currentCell.cindex) {
           return validator(
-            current.rindex,
-            current.cindex,
-            current.data,
+            currentCell.rindex,
+            currentCell.cindex,
+            cell,
             sudokuArr
           );
         } else {
@@ -130,13 +163,18 @@ function Sudoku() {
     });
     setIsValid(updatedValidationArr);
   };
+
   const inputChangeHandler = (data, rindex, cindex) => {
     if (data >= 0 && data <= 9) {
+      setHistory((prevState) => [
+        ...prevState,
+        { data: data == 0 ? "" : data, rindex: rindex, cindex: cindex },
+      ]);
       if (data == 0) {
         // because it is converting to 0 because of +
         data = "";
       }
-      setPrevSudokuArr(sudokuArr);
+
       const updatedSudokuArr = sudokuArr.map((row, rowIndex) => {
         return row.map((cell, colIndex) => {
           if ((rowIndex == rindex) & (colIndex == cindex)) {
@@ -184,7 +222,6 @@ function Sudoku() {
         onClear={clearHandler}
         newGame={newGameHandler}
         onUndo={undoHandler}
-        onRedo={redoHandler}
         onErase={eraseHandler}
       />
     </>
