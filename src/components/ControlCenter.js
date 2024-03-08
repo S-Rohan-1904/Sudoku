@@ -1,4 +1,5 @@
 import React from "react";
+import "./ControlCenter.css";
 
 function ControlCenter(props) {
   const clearGameHandler = () => {
@@ -17,12 +18,22 @@ function ControlCenter(props) {
     props.onWin();
   };
   return (
-    <div>
-      <button onClick={clearGameHandler}>Clear Game</button>
-      <button onClick={newGameHandler}>New Game</button>
-      <button onClick={undoHandler}>Undo</button>
-      <button onClick={eraseHandler}>Erase</button>
-      <button onClick={winHandler}>Validate Sudoku</button>
+    <div className="wrapper">
+      <a onClick={clearGameHandler} className="control-center">
+        Clear Game
+      </a>
+      <a onClick={newGameHandler} className="control-center">
+        New Game
+      </a>
+      <a onClick={undoHandler} className="control-center">
+        Undo
+      </a>
+      <a onClick={eraseHandler} className="control-center">
+        Erase
+      </a>
+      <a onClick={winHandler} className="control-center">
+        Check Win
+      </a>
     </div>
   );
 }

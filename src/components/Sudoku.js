@@ -127,40 +127,48 @@ function Sudoku() {
   };
 
   const eraseHandler = () => {
-    const erasedHistory = history.filter((historyObj) => {
-      if (
-        sudokuArr[currentCell.rindex][currentCell.cindex] != historyObj.data
-      ) {
-        return historyObj;
-      }
-    });
-    setHistory(erasedHistory);
-    console.log(erasedHistory);
-    const updatedSudokuArr = sudokuArr.map((row, rowIndex) => {
-      return row.map((cell, colIndex) => {
-        if (rowIndex == currentCell.rindex && colIndex == currentCell.cindex) {
-          return "";
-        } else {
-          return cell;
+    if (JSON.stringify(history) != JSON.stringify([])) {
+      const erasedHistory = history.filter((historyObj) => {
+        if (
+          sudokuArr[currentCell.rindex][currentCell.cindex] != historyObj.data
+        ) {
+          return historyObj;
         }
       });
-    });
-    setSudokuArr(updatedSudokuArr);
-    const updatedValidationArr = validationArr.map((row, rowIndex) => {
-      return row.map((cell, colIndex) => {
-        if (rowIndex == currentCell.rindex && colIndex == currentCell.cindex) {
-          return validator(
-            currentCell.rindex,
-            currentCell.cindex,
-            cell,
-            sudokuArr
-          );
-        } else {
-          return isValid[rowIndex][colIndex];
-        }
+      setHistory(erasedHistory);
+      console.log(erasedHistory);
+      const updatedSudokuArr = sudokuArr.map((row, rowIndex) => {
+        return row.map((cell, colIndex) => {
+          if (
+            rowIndex == currentCell.rindex &&
+            colIndex == currentCell.cindex
+          ) {
+            return "";
+          } else {
+            return cell;
+          }
+        });
       });
-    });
-    setIsValid(updatedValidationArr);
+      setSudokuArr(updatedSudokuArr);
+      const updatedValidationArr = validationArr.map((row, rowIndex) => {
+        return row.map((cell, colIndex) => {
+          if (
+            rowIndex == currentCell.rindex &&
+            colIndex == currentCell.cindex
+          ) {
+            return validator(
+              currentCell.rindex,
+              currentCell.cindex,
+              cell,
+              sudokuArr
+            );
+          } else {
+            return isValid[rowIndex][colIndex];
+          }
+        });
+      });
+      setIsValid(updatedValidationArr);
+    }
   };
 
   const inputChangeHandler = (data, rindex, cindex) => {

@@ -13,6 +13,9 @@ const Cell = (props) => {
     }
   };
   let classes = "cellInput " + props.className;
+  if (props.readOnly) {
+    classes += " read-only";
+  }
   return (
     <input
       type="number"

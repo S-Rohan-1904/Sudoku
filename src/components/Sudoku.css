@@ -1,9 +1,63 @@
 .win {
+  font-family: "Courier New", Courier, monospace;
   font-size: 1.3em;
+  color: white;
   padding: 0;
+  margin-top: 0.3rem;
   box-sizing: border-box;
   position: absolute;
   left: 0;
   right: 0;
   text-align: center;
+  color: #fff;
+  text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff,
+    0 0 42px rgb(0, 117, 213), 0 0 82px rgb(0, 117, 213),
+    0 0 92px rgb(0, 117, 213), 0 0 102px rgb(0, 117, 213),
+    0 0 151px rgb(0, 117, 213);
+}
+
+.sudoku {
+  margin: 2rem auto 1rem auto;
+  display: grid;
+  grid-template-columns: repeat(9, 2.2rem);
+  grid-template-rows: repeat(9, 2.2rem);
+  width: fit-content;
+  border: 2px solid white;
+  box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
+}
+
+@media (max-width: 500px) {
+  .sudoku {
+    margin: 3rem auto 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(9, 1.7rem);
+    grid-template-rows: repeat(9, 1.7rem);
+    width: fit-content;
+    border: 2px solid white;
+    box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
+  }
+}
+
+@media (max-width: 290px) {
+  .sudoku {
+    margin: 3rem auto 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(9, 1.5rem);
+    grid-template-rows: repeat(9, 1.5rem);
+    width: fit-content;
+    border: 2px solid white;
+    box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
+  }
+}
+
+@media (max-width: 230px) {
+  .sudoku {
+    margin: 3rem auto 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(9, 1.25rem);
+    grid-template-rows: repeat(9, 1.25rem);
+    width: fit-content;
+    border: 2px solid white;
+    box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
+  }
 }

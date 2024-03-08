@@ -3,23 +3,24 @@
   margin: 0;
   padding: 0;
 }
+:root {
+  --clr-glow: #ffcc00;
+}
 
 .App {
   text-align: center;
-  background-color: #00aaff;
+  background-color: black;
   min-height: 100vh;
+  width: auto;
 }
 
-h1.title {
-  margin: 0;
-  color: whitesmoke;
-}
-
-.sudoku {
-  margin: 2rem auto;
-  display: grid;
-  grid-template-columns: repeat(9, 7vh);
-  grid-template-rows: repeat(9, 7vh);
-  width: fit-content;
-  border: 2px solid #9ec8b9;
+h2.title {
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-top: 0.5rem;
+  text-shadow: 0 0 1px #fff, 0 0 10px #fff, 0 0 21px #fff,
+    0 0 42px rgb(0, 117, 213), 0 0 82px rgb(0, 117, 213),
+    0 0 92px rgb(0, 117, 213), 0 0 102px rgb(0, 117, 213),
+    0 0 151px rgb(0, 117, 213);
 }

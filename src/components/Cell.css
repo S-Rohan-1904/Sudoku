@@ -3,17 +3,30 @@
   padding: 0;
   box-sizing: border-box;
 }
-/*To define a global variable*/
+
 :root {
-  --clr-grid: black;
-  --clr-rc: rgb(39, 38, 38);
+  --clr-grid: rgb(255, 255, 255);
+  --clr-background: black;
+  --clr-font: white;
+  --clr-glow: #ffcc00;
 }
 
 .cellInput {
-  font-size: 1em;
+  font-size: 1.3em;
   text-align: center;
   border: 0.1px solid var(--clr-grid);
+  background-color: var(--clr-background);
+  color: var(--clr-font);
   outline: none;
+  box-shadow: 0 0 4px #03e9f4, 0 0 4px #03e9f4, 0 0 4px #03e9f4, 0 0 4px #03e9f4;
+}
+
+.read-only {
+  color: #fff;
+  text-shadow: 0 0 2px #fff, 0 0 10px #fff, 0 0 16px #fff,
+    0 0 20px rgb(255, 0, 0), 0 0 24px rgb(255, 217, 0),
+    0 0 26px rgb(255, 217, 0), 0 0 28px rgb(255, 217, 0),
+    0 0 30px rgb(255, 217, 0);
 }
 
 /* to remove arrows in input*/
@@ -95,4 +108,10 @@ input::-webkit-inner-spin-button {
 }
 .cellInput:nth-child(9) {
   border: 0.1px solid var(--clr-grid);
+}
+
+@media (max-width: 500px) {
+  .cellInput {
+    font-size: 1em;
+  }
 }
