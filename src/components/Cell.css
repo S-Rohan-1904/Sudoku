@@ -12,13 +12,12 @@
 }
 
 .cellInput {
-  font-size: 1.3em;
+  font-size: 2rem;
   text-align: center;
   border: 0.1px solid var(--clr-grid);
   background-color: var(--clr-background);
   color: var(--clr-font);
   outline: none;
-  box-shadow: 0 0 4px #03e9f4, 0 0 4px #03e9f4, 0 0 4px #03e9f4, 0 0 4px #03e9f4;
 }
 
 .read-only {
@@ -40,7 +39,7 @@ input::-webkit-inner-spin-button {
 }
 
 .cellInput:nth-child(3n) {
-  border-right: 1px solid var(--clr-grid);
+  border-right: 2px solid var(--clr-grid);
 }
 
 .cellInput:nth-child(9n) {
@@ -48,36 +47,36 @@ input::-webkit-inner-spin-button {
 }
 
 .cellInput:nth-child(27n + 1) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 
 .cellInput:nth-child(27n + 2) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 
 .cellInput:nth-child(27n + 3) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 
 .cellInput:nth-child(27n + 4) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 .cellInput:nth-child(27n + 5) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 .cellInput:nth-child(27n + 6) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 .cellInput:nth-child(27n + 7) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 
 .cellInput:nth-child(27n + 8) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 
 .cellInput:nth-child(27n + 9) {
-  border-top: 1px solid var(--clr-grid);
+  border-top: 2px solid var(--clr-grid);
 }
 
 .cellInput:nth-child(1) {
@@ -88,7 +87,7 @@ input::-webkit-inner-spin-button {
 }
 .cellInput:nth-child(3) {
   border: 0.1px solid var(--clr-grid);
-  border-right: 1px solid var(--clr-grid);
+  border-right: 2px solid var(--clr-grid);
 }
 .cellInput:nth-child(4) {
   border: 0.1px solid var(--clr-grid);
@@ -98,20 +97,26 @@ input::-webkit-inner-spin-button {
 }
 .cellInput:nth-child(6) {
   border: 0.1px solid var(--clr-grid);
-  border-right: 1px solid var(--clr-grid);
+  border-right: 2px solid var(--clr-grid);
 }
 .cellInput:nth-child(7) {
   border: 0.1px solid var(--clr-grid);
 }
 .cellInput:nth-child(8) {
-  border: 0.1px solid var(--clr-grid);
+  border: 0.5px solid var(--clr-grid);
 }
 .cellInput:nth-child(9) {
   border: 0.1px solid var(--clr-grid);
 }
 
+@media (max-width: 700px) {
+  .cellInput {
+    font-size: 1.5rem;
+  }
+}
+
 @media (max-width: 500px) {
   .cellInput {
-    font-size: 1em;
+    font-size: 1rem;
   }
 }

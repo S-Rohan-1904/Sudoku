@@ -1,9 +1,10 @@
 .win {
   font-family: "Courier New", Courier, monospace;
-  font-size: 1.3em;
+  font-size: 2rem;
   color: white;
   padding: 0;
   margin-top: 0.3rem;
+  margin-bottom: 2rem;
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -17,47 +18,47 @@
 }
 
 .sudoku {
-  margin: 2rem auto 1rem auto;
+  margin: 4rem auto 1rem auto;
   display: grid;
-  grid-template-columns: repeat(9, 2.2rem);
-  grid-template-rows: repeat(9, 2.2rem);
+  grid-template-columns: repeat(9, 4rem);
+  grid-template-rows: repeat(9, 4rem);
   width: fit-content;
   border: 2px solid white;
   box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
 }
 
+@media (max-width: 700px) {
+  .sudoku {
+    grid-template-columns: repeat(9, 3rem);
+    grid-template-rows: repeat(9, 3rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .sudoku {
+    grid-template-columns: repeat(9, 3rem);
+    grid-template-rows: repeat(9, 3rem);
+  }
+}
+
 @media (max-width: 500px) {
   .sudoku {
-    margin: 3rem auto 2rem auto;
-    display: grid;
-    grid-template-columns: repeat(9, 1.7rem);
-    grid-template-rows: repeat(9, 1.7rem);
-    width: fit-content;
-    border: 2px solid white;
-    box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
+    grid-template-columns: repeat(9, 2.5rem);
+    grid-template-rows: repeat(9, 2.5rem);
   }
 }
 
-@media (max-width: 290px) {
+@media (max-width: 450px) {
   .sudoku {
-    margin: 3rem auto 2rem auto;
-    display: grid;
-    grid-template-columns: repeat(9, 1.5rem);
-    grid-template-rows: repeat(9, 1.5rem);
-    width: fit-content;
-    border: 2px solid white;
-    box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
+    margin: 3rem auto 1rem auto;
+    grid-template-columns: repeat(9, 2.25rem);
+    grid-template-rows: repeat(9, 2.25rem);
   }
 }
-
-@media (max-width: 230px) {
+@media (max-width: 400px) {
   .sudoku {
-    margin: 3rem auto 2rem auto;
-    display: grid;
-    grid-template-columns: repeat(9, 1.25rem);
-    grid-template-rows: repeat(9, 1.25rem);
-    width: fit-content;
-    border: 2px solid white;
-    box-shadow: 0px 0 60px 5px rgb(0, 117, 213);
+    margin: 3rem auto 1rem auto;
+    grid-template-columns: repeat(9, 1.75rem);
+    grid-template-rows: repeat(9, 1.75rem);
   }
 }
