@@ -41,9 +41,6 @@ function Sudoku() {
           break;
         }
       }
-      if (win) {
-        alert("You won!!"); // handle what to do after win
-      }
     }
     setWin(win);
   };
